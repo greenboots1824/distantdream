@@ -16,9 +16,9 @@ def typing_effect(text):
 
     time.sleep(pause_between_dialog)
 
-def main():
+def engine(file):
     # Abrir o jogo
-    with open("scenes/intro.json", "r", encoding="utf-8") as file:
+    with open(file, "r", encoding="utf-8") as file:
         game = json.load(file) # Jogo na memória
 
     # Começando pela intro...
@@ -41,5 +41,5 @@ def main():
     # Continuar no próximo arquivo
     # (Ainda farei esta parte)
 
-if __name__ == "__main__":
-    main()
+    # No final, devolver o arquivo
+    # para a lógica do jogo executar
