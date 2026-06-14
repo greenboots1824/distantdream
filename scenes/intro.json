@@ -1,0 +1,15 @@
+{
+	"cena_1": {
+		"falas": {
+			"inicio": "fala_1",
+			"fala_1": {
+				"texto": "Você sente a tua mente cansada...",
+				"proximo": "fala_1_1"
+			},
+			"fala_1_1": {
+				"texto_1_1": "Apenas deseja descansar, mas não pode.",
+				"proximo": null
+			}
+		}
+	}	
+}
