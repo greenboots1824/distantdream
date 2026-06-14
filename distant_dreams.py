@@ -3,34 +3,43 @@ import json
 import time
 import random
 
-def typing_effect(text):
-    linebreak = 50
-    interval = 0.050
+# All these values are
+# in seconds.
+interval_min = 0.050
+interval_max = 0.150
+pause_between_dialog = 0.400
 
+def typing_effect(text):
     for letter in text:
         print(letter, flush=True, end='')
-        time.sleep(interval)
+        time.sleep(random.uniform(interval_min, interval_max))
+
+    time.sleep(pause_between_dialog)
 
 def main():
     # Abrir o jogo
     with open("scenes/intro.json", "r", encoding="utf-8") as file:
-        game = json.load(file)
+        game = json.load(file) # Jogo na memória
 
     # Começando pela intro...
-    cenario_state = "intro"
-    section  = game[game_state]["falas"]
-    talk = game[game_state]
+    scene = game["start"]["dialogs"]
+    scenelen = len(scene)
+    index = 0
 
-    while True:
+    while index < scenelen:
+        # Definir essa coisa pra não zoar
+        # a minha vida, minha existência :D
+        state = scene[index]
+        dialog = state["text"]
+
         # Efeito de digitação
-        typing_effect(f"Teste: {section[n]["texto"]}") 
+        typing_effect(dialog) 
 
-
-
-        if section[n]["texto"] == None:
-            break
+        # Próximo texto....
+        index += 1
 
     # Continuar no próximo arquivo
+    # (Ainda farei esta parte)
 
 if __name__ == "__main__":
     main()
