@@ -2,10 +2,16 @@
 	"start": {
 		"dialogs": [
 			{
-				"text": "Você sente a tua mente cansada...\n"
+				"person": "Narrador",
+				"text": "Você chegou cansado(a) de ontem a noite..."
 			},
 			{
-				"text": "Apenas deseja descansar, mas não pode."
+				"person": "Narrador",
+				"text": "Tão cansado(a) que acabou \"desmaiando\" de exaustão após um dia pesado,"
+			},
+			{
+				"person": "Narrador",
+				"text": "tão estressante que parece ter sugado tua alma."
 			}
 		]
 	}	
