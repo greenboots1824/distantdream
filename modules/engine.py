@@ -1,53 +1,91 @@
-#!/bin/python3
+import os
 import json
 import time
 import random
 
-# All these values are
-# in seconds.
-interval_min = 0.050
-interval_max = 0.100
-pause_between_dialog = 0.300
+# 1. Faça sistema de progresso depois
+
+# Os valores são em segundos
+interval = 0.025
+pause_dialog = 0.100
+
+# Sistema de limpeza de terminal
+if os.name == "nt":
+    system_clear = "cls"
+else:
+    system_clear = "clear"
 
 def typing_effect(text):
     for letter in text:
         print(letter, flush=True, end='')
-        time.sleep(random.uniform(interval_min, interval_max))
-    print() # Quebra de linha
+        #time.sleep(interval)
+    print() # Nova linha
 
-    time.sleep(pause_between_dialog)
+    time.sleep(pause_dialog)
 
-def engine(file):
-    # Abrir o jogo
-    with open(file, "r", encoding="utf-8") as file:
-        game = json.load(file) # Jogo na memória
+def main(file):
+    try:
+        os.system(system_clear)
 
-    # Começando pela intro...
-    scene = game["start"]["dialogs"]
-    scenelen = len(scene)
-    index = 0
+        # Indicadores de partes
+        # da história
+        part = "start"
+        nextpart = None
 
-    while index < scenelen:
-        # Definir essa coisa pra não zoar
-        # a minha vida, minha existência :D
-        state = scene[index]
-        dialog = state["text"]
+        # Abrir o jogo
+        with open(file, "r", encoding="utf-8") as jsonfile:
+            game = json.load(jsonfile) # Jogo na memória
 
-        # Mecanismo de personagem
-        if index == 0:
-            person = state["person"]
-            print(f"[{person}]")
+        # Variáveis do jogo em si...
+        section = game[part]
+        chapter = section["dialogs"]
+        chapterlen = len(scene)
 
-        # Efeito de digitação
-        typing_effect(dialog) 
+        index = 0
 
-        # Próximo texto....
-        index += 1
+        while True: # Main loop
+            while index < chapterlen: # Loop de exibição
+                # Definir essa coisa pra não zoar
+                # a minha vida, minha existência :D
+                state = scene[index]
+                dialog = state["text"]
+                nextpart = section.get("nextpart")
 
-    input("\nPressione <ENTER> para continuar...")
+                # Mecanismo de personagem
+                if index == 0:
+                    person = state["person"]
+                    print(f"[{person}]")
 
-    # Continuar no próximo arquivo
-    # (Ainda farei esta parte)
+                # Efeito de digitação
+                typing_effect(dialog) 
 
-    # No final, devolver o arquivo
-    # para a lógica do jogo executar
+                # Próximo texto....
+                index += 1
+
+            input("\nPressione <ENTER> para continuar...")
+
+            index = 0
+
+            print(chapter)
+            print(nextpart)
+
+            if nextpart is None:
+                break
+            else:
+                part = nextpart
+                chapter = game[nextpart]
+                continue
+
+        # Continuar no próximo arquivo
+        # (Ainda farei esta parte)
+        
+
+        # No final, devolver o arquivo
+        # para a lógica do jogo executar
+
+    except KeyboardInterrupt:
+        os.system(system_clear)
+        print("Fechando o jogo...")
+        time.sleep(1.5)
+
+        os.system(system_clear)

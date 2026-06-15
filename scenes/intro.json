@@ -7,12 +7,25 @@
 			},
 			{
 				"person": "Narrador",
-				"text": "Tão cansado(a) que acabou \"desmaiando\" de exaustão após um dia pesado,"
+				"text": "Ao chegar, acabou \"desmaiando\" de exaustão após um dia pesado."
 			},
 			{
 				"person": "Narrador",
-				"text": "tão estressante que parece ter sugado tua alma."
+				"text": "Isto parece ter sugado tua alma."
+			},
+			{
+				"person": "Narrador",
+				"text": "Todo aquele prazer de poder estar vivendo..."
+			}
+		],
+		"nextpart": "wake_up"
+	},	
+	"wake_up": {
+		"dialogs": [
+			{
+				"person": "Narrador",
+				"text": "Após acordar, você sente o peso da manhã"
 			}
 		]
-	}	
+	}
 }

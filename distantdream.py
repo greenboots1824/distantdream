@@ -1,12 +1,10 @@
-#!/bin/python3
+#!/usr/bin/env python3
 import os
 from modules import engine
 
-# Fazer reconhecimento de "clear"
-
 def main():
     os.system("clear")
-    engine.engine("scenes/intro.json")
+    engine.main("scenes/intro.json")
 
 if __name__ == "__main__":
     main()
