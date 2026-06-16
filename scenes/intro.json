@@ -20,12 +20,39 @@
 		],
 		"nextpart": "wake_up"
 	},	
+
 	"wake_up": {
 		"dialogs": [
 			{
 				"person": "Narrador",
-				"text": "Após acordar, você sente o peso da manhã"
+				"text": "Após acordar, você sente o peso da manhã sobre sua mente."
+			},
+			{
+				"person": "Narrador",
+				"text": "O dia está nublado lá fora. As nuvens insistem em chorar."
+			},
+			{
+				"person": "Narrador",
+				"text": "Tudo o que você vê é apenas um cinzar, como a falta de algo que cobre assim o mundo."
+			},
+			{
+				"person": "Narrador",
+				"text": "\nVocê deseja levantar?",
+				"question": true,
+				"options": [
+					{
+						"option": "Sim",
+						"nextpart": "start",
+						"nextfile": "bedroom"
+					},
+					{
+						"option": "Não",
+						"nextpart": "stay_on_bed"
+					}
+				]
 			}
 		]
-	}
+	},
+
+	"stay_on_bed": {}
 }

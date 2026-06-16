@@ -1,0 +1,8 @@
+{
+	"interval_min": 0.050,
+	"interval_max": 0.150,
+	"pause_dialog": 0.200,
+	"long_pause": 0.300,
+
+	"pause_enter": false
+}
