@@ -56,8 +56,6 @@ def main(file):
                     oldperson = dialogs[index - 1].get("person", None)
                     newperson = section.get("person", None)
                     
-                    print(f"oldperson: {oldperson}\nnewperson: {newperson}")
-
                     # Mecanismo de personagem
                     if index == 0:
                         print(f"[{newperson}]")
