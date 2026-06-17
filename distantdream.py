@@ -4,8 +4,7 @@
 # Autor: BotasVerdes
 # Licença: GNU AGPLv3
 
-import os
-from modules import engine, utils
+from modules import engine
 
 def main():
     engine.main("scenes/intro.json")
