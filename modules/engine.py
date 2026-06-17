@@ -3,125 +3,157 @@ import sys
 import json
 import time
 
-from .functions import detect_clear
+from . import utils
 
+#####################################
 # 1. Faça sistema de progresso depois
 
 # Continuar no próximo arquivo
 # (Ainda farei esta parte)
 
-
 # No final, devolver o arquivo
 # para a lógica do jogo executar
+#####################################
 
 # Sistema de limpeza de terminal
-system_clear = detect_clear()
+system_clear = utils.detect_clear()
 
 # Sistema de configuração
-with open("settings.json", "r", encoding="utf-8") as settingsfile:
-    setting = json.load(settingsfile)
-
-#def load_file(filename):
-#    with open(filename, "r", encoding="utf-8") as file:
-#        return json.load(file)
-
-def typing_effect(text):
-    for letter in text:
-        print(letter, flush=True, end='')
-        time.sleep(random.uniform(setting["interval_min"], setting["interval_max"]))
-    print() # Nova linha
-
-    time.sleep(setting["pause_dialog"])
+setting = utils.loadfile("settings.json")
 
 def main(file):
     try:
-        # Abrir o jogo
-        with open(file, "r", encoding="utf-8") as gamefile:
-            game = json.load(gamefile) # Jogo na memória
-
-        # Indicadores de partes da história 
-        part = "wake_up"
-        nextpart = None
-        nextfile = None # Trabalhar na importação de arquivos
-
-        index = 0
-
-        # Lógica principal do jogo
+        # Loop para leitura de arquivos
         while True:
-            os.system(system_clear)
+            game = utils.loadfile(file) # Jogo na memória
 
-            while index < len(game[part]["dialogs"]):
-                # Definir essa coisa pra não zoar
-                # a minha vida, minha existência :D
-                section = game[part]["dialogs"][index]
-                dialog = section["text"]
+            # Indicadores de partes da história 
+            # Inicializando eles...
+            part = "start" # O padrão é "start"
+            nextpart = None # Nada carregado
+            nextfile = None # Também não já nada...
 
-                nextpart = section.get("nextpart")
+            # Já viu começar de outro lugar?
+            # Claro que o index pra "folhear" a história
+            # é justo do ponto zero!
+            index = 0
 
-                # Mecanismo de personagem
-                if index == 0:
-                    person = section["person"]
-                    print(f"[{person}]")
+            # Lógica principal do jogo
+            while True:
+                os.system(system_clear)
 
-                # Efeito de digitação
-                typing_effect(dialog) 
+                while index < len(game[part]["dialogs"]):
+                    # Definir essa coisa pra não zoar
+                    # a minha vida, minha existência :D
+                    section = game[part]["dialogs"][index]
+                    dialogs = game[part]["dialogs"]
+                    dialog = section["text"]
 
-                # Se for uma pergunta, então...
-                if section.get("question") is True:
-                    options = section["options"]
+                    # Próxima parte para continuar
+                    nextpart = section.get("nextpart")
 
-                    # Você recebe as escolhas...
-                    for i, choice in enumerate(options):
-                        typing_effect(f"[{i+1}] {options[i]["option"]}")
+                    # Checagem de personagens
+                    oldperson = dialogs[index - 1].get("person", None)
+                    newperson = section.get("person", None)
+                    
+                    print(f"oldperson: {oldperson}\nnewperson: {newperson}")
+
+                    # Mecanismo de personagem
+                    if index == 0:
+                        print(f"[{newperson}]")
+
+                    # Cheque se o personagem anterior é diferente
+                    # ou igual ao atual. Se verdadeiro para diferente,
+                    # logo, exibir personagem diferente
+
+                    # Foi a parte mais legal do código, poxa :,)
+                    if oldperson != newperson and not oldperson is None:
+                        print(f"\n[{newperson}]")
+
+                    # A gente as vezes tem que parar, né?
+                    # Já pensou como vive o trabalhador
+                    # sem descansar?
+                    if section.get("wait", False) is True: 
+                        interval = section["interval"]
+
+                        # Roda pião!
+                        for _ in range(section["roll"]):
+                            os.system(system_clear)
+                            utils.typing_effect(setting, dialog, Wait=interval, NewLine=False)
+
+                    else:
+                        # Efeito de digitação 
+                        utils.typing_effect(setting, dialog) 
+
+                    # Se for uma pergunta, então...
+                    if section.get("question") is True:
+                        options = section["options"]
+
+                        # Você recebe as escolhas...
+                        for i, choice in enumerate(options):
+                            utils.typing_effect(setting, f"[{i+1}] {options[i]["option"]}")
 
                         while True:
                             try:
                                 # Agora escolha por onde trilhar
-                                choice_player = int(input("> "))
+                                choice_player = int(input("> ")) - 1
 
-                                # Bora processar dados!
-                                break
+                                # A escolha foi sua! Presuma sua consequência!
+                                if choice_player >= 0 and choice_player < len(options):
+                                    # Verificar se tem continuação no próximo arquivo...
+                                    # Vire a página, filho!
+                                    nextfile = options[choice_player].get("nextfile", None)
+
+                                    # Se houver algo, apenas seguir o que manda
+                                    # Se não houver nada, segue o padrão...
+                                    nextpart = options[choice_player].get("nextpart", "start") 
+
+                                    # Bora processar dados!
+                                    break
+                                else:
+                                    # Volta pra trás, rapaz!
+                                    # Escolhe direito! >:(
+                                    continue
 
                             # Digite um número, seu boboca!
                             except ValueError: 
                                 continue
 
-                    # A escolha foi sua! Presuma sua consequência!
-                    if choice_player < 0 or choice_player > len(options):
-                        part = options[choice_player]["nextpart"]
+                    # Próximo texto....
+                    index += 1 
 
+                # Deseja que o jogo pause e continue com enter?
+                # Não parece muito legal as vezes
+                # Só configurar e arrastar pra cima, pô!
+                if setting["pause_enter"] is True:
+                    input("\nPressione <ENTER> para continuar...")
+                else:
+                    time.sleep(setting["long_pause"])
 
+                # Se houver continuação em outro arquivo,
+                # apenas devolver e deixar o loop main
+                # fazer seu serviço, é claro
+                if nextfile:
+                    file = nextfile
+                    nextfile = None
+                    break
 
+                # A história apenas continua...
+                if nextpart is None:
+                    break
 
+                else:
+                    # Afinal, a história não acaba, poxa.
+                    # Deixa rolar! Deixa ir pra outra parte!
+                    part = nextpart
+                    section = game[part]
+                    index = 0
 
-                # Próximo texto....
-                index += 1 
-
-            # Deseja que o jogo pause com enter?
-            # Não parece muito legal as vezes
-
-            # Só configurar e arrastar pra cima, pô!
-            if setting["pause_enter"] is True:
-                input("\nPressione <ENTER> para continuar...")
-            else:
-                time.sleep(setting["long_pause"])
-
-            # Segmento da história...
-            if nextpart is None:
+            # O fim.
+            if nextfile is None and nextpart is None:
                 break
-            else:
-                # Afinal, a história não acaba, poxa.
-                # Deixa rolar! Deixa ir pra outra parte!
-                part = nextpart
-                section = game[part]
-                index = 0 
 
     except KeyboardInterrupt:
         os.system(system_clear)
         print("Fechando o jogo...")
         time.sleep(1.5)
-
-    except Exception as error:
-        os.system(system_clear)
-        print("An error occurred:", error)
-        sys.exit(1)

@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 import os
-from modules import engine, detect_sys
-
-system_clear = detect_clear()
+from modules import engine, utils
 
 def main():
-    os.system("clear")
     engine.main("scenes/intro.json")
 
 if __name__ == "__main__":

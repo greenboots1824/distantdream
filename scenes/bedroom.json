@@ -1,0 +1,18 @@
+{
+	"start": {
+		"dialogs": [
+			{
+				"person": "Narrador",
+				"text": "Você senta-se na cama meio tonto(a)."
+			},
+			{
+				"person": "JOGO",
+				"text": "Continua...! Foi cansativo escrever tudo isso :("
+			},
+			{
+				"person": "JOGO",
+				"text": "A demonstração acaba AQUI. Agradeço por gostar!"
+			}
+		]
+	}
+}

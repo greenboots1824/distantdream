@@ -15,10 +15,10 @@
 			},
 			{
 				"person": "Narrador",
-				"text": "Todo aquele prazer de poder estar vivendo..."
+				"text": "Todo aquele prazer de poder estar vivendo...",
+				"nextpart": "wake_up"
 			}
-		],
-		"nextpart": "wake_up"
+		]
 	},	
 
 	"wake_up": {
@@ -42,8 +42,7 @@
 				"options": [
 					{
 						"option": "Sim",
-						"nextpart": "start",
-						"nextfile": "bedroom"
+						"nextfile": "scenes/bedroom.json"
 					},
 					{
 						"option": "Não",
@@ -54,5 +53,22 @@
 		]
 	},
 
-	"stay_on_bed": {}
+	"stay_on_bed": {
+		"dialogs": [
+			{
+				"person": "Narrador",
+				"text": "Você resolve apenas fechar os olhos e tentar \"descansar\" novamente."
+			},
+			{
+				"wait": true,
+				"interval": 0.4,
+				"roll": 5,
+				"text": "..."
+			},
+			{
+				"person": "Jogo",
+				"text": "Continua depois...! Foi cansativo escrever tudo isso :("
+			}
+		]
+	}
 }
