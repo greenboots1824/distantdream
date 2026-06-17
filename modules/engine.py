@@ -6,13 +6,8 @@ import time
 from . import utils
 
 #####################################
-# 1. Faça sistema de progresso depois
-
-# Continuar no próximo arquivo
-# (Ainda farei esta parte)
-
-# No final, devolver o arquivo
-# para a lógica do jogo executar
+# 1. Fazer sistema de progresso (save)
+# 2. Fazer sistema de estados
 #####################################
 
 # Sistema de limpeza de terminal
@@ -53,7 +48,11 @@ def main(file):
                     nextpart = section.get("nextpart")
 
                     # Checagem de personagens
-                    oldperson = dialogs[index - 1].get("person", None)
+                    if index - 1 < 0:
+                        oldperson = None
+                    else:
+                        oldperson = dialogs[index - 1].get("person", None)
+
                     newperson = section.get("person", None)
                     
                     # Mecanismo de personagem
@@ -68,20 +67,8 @@ def main(file):
                     if oldperson != newperson and not oldperson is None:
                         print(f"\n[{newperson}]")
 
-                    # A gente as vezes tem que parar, né?
-                    # Já pensou como vive o trabalhador
-                    # sem descansar?
-                    if section.get("wait", False) is True: 
-                        interval = section["interval"]
-
-                        # Roda pião!
-                        for _ in range(section["roll"]):
-                            os.system(system_clear)
-                            utils.typing_effect(setting, dialog, Wait=interval, NewLine=False)
-
-                    else:
-                        # Efeito de digitação 
-                        utils.typing_effect(setting, dialog) 
+                    # Efeito de digitação 
+                    utils.typing_effect(setting, dialog) 
 
                     # Se for uma pergunta, então...
                     if section.get("question") is True:

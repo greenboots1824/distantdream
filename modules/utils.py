@@ -12,11 +12,15 @@ def typing_effect(setting, text, Wait=-1.0, NewLine=True):
         raise TypeError("Wait is not an int!")
 
     for letter in text:
+        interval_gen = random.uniform(
+                setting["interval_min"],
+                setting["interval_max"])
+
         print(letter, flush=True, end='')
 
         # -1 para desativado
         if Wait == -1.0:
-            time.sleep(random.uniform(setting["interval_min"], setting["interval_max"]))
+            time.sleep(interval_gen)
 
         else:
             time.sleep(Wait)

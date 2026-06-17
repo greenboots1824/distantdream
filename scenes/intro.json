@@ -60,15 +60,14 @@
 				"text": "Você resolve apenas fechar os olhos e tentar \"descansar\" novamente."
 			},
 			{
-				"wait": true,
-				"interval": 0.4,
-				"roll": 5,
-				"text": "..."
+				"person": "WILLIAM",
+				"text": "Continua depois...! Foi cansativo escrever tudo isso :("
 			},
 			{
-				"person": "Jogo",
-				"text": "Continua depois...! Foi cansativo escrever tudo isso :("
+				"person": "WILLIAM",
+				"text": "A demonstração acaba AQUI. Agradeço por testar e talvez ter gostado!"
 			}
+
 		]
 	}
 }
