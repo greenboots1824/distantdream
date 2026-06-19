@@ -40,8 +40,8 @@ def main(file):
                 while index < len(game[part]["dialogs"]):
                     # Definir essa coisa pra não zoar
                     # a minha vida, minha existência :D
-                    section = game[part]["dialogs"][index]
                     dialogs = game[part]["dialogs"]
+                    section = dialogs[index]
                     dialog = section["text"]
 
                     # Próxima parte para continuar
