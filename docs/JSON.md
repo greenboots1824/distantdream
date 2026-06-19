@@ -7,7 +7,7 @@
 
 ## Padrão JSON
 
-Aqui é onde toda a magia do projeto está. Como o projeto é movido por estes arquivos em JSON, a formatação deles é relativamente simples e você pode entender mais olhando o [`engine.py`](modules/engine.py). Portanto, a seguir, farei questão de explicar como funciona alguns parâmetros.
+Aqui é onde toda a magia do projeto está. Como o projeto é movido por estes arquivos em JSON, a formatação deles é relativamente simples e você pode entender mais olhando o [`engine.py`](../modules/engine.py). Portanto, a seguir, farei questão de explicar como funciona alguns parâmetros.
 
 Vamos supor que estamos falando de `intro.json` no exemplo abaixo:
 
