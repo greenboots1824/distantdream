@@ -34,3 +34,9 @@ Portanto, se ao jogar o jogo, você sentir  **quaisquer sintomas psicológicos d
 ## História do Jogo
 
 Escrevendo ainda...
+
+## Inspiração
+
+Escrevendo ainda...
+
+## Como Jogar?
